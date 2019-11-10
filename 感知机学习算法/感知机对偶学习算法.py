@@ -10,14 +10,17 @@ def Load_data(filename,K):
 
 def train(data,label,alpha):
     m,n = data.shape
-    w = np.zeros(n)
+    w = np.zeros(m)
     b = 0
     iterator_times = 0
     tag = True
     while(tag):
+        tmp = np.zeros(n)
         for i in range(m):
-            if (label[i] * (np.dot(w,data[i]) + b) <= 0):
-                w = w + alpha * label[i] * data[i].T
+            tmp += w[i] * data[i] * label[i]
+        for i in range(m):
+            if (label[i] * (np.dot(tmp,data[i]) + b) <= 0):
+                w[i] = w[i] + alpha
                 b = b + alpha * label[i]
                 tag = True
                 break
@@ -25,7 +28,11 @@ def train(data,label,alpha):
                 tag = False
         iterator_times += 1
         print("iterator_times = {0}  w = {1}  b = {2}".format(iterator_times,w,b))
-    return w,b
+    #print(data)
+    tmp = np.zeros(n)
+    for i in range(m):
+        tmp += w[i] * data[i] * label[i]
+    return tmp,b
 if __name__ == "__main__":
     filename = "/Users/chutong/Desktop/Machine_Learning_Algorithm/感知机学习算法/data.txt"
     data,label = Load_data(filename,2) # K is dimension of data
@@ -33,3 +40,4 @@ if __name__ == "__main__":
     w,b = train(data,label,alpha) 
     print("Final W = {0} , b = {1}".format(w,b))
     
+# data,label = Load_data("/Users/chutong/Desktop/Machine_Learning_Algorithm/感知机学习算法/data.txt")

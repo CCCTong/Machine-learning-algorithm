@@ -30,6 +30,6 @@ if __name__ == "__main__":
     filename = "/Users/chutong/Desktop/Machine_Learning_Algorithm/感知机学习算法/data.txt"
     data,label = Load_data(filename,2) # K is dimension of data
     alpha = 0.3  # learining rate
-    w,b = train(data,label,alpha) 
+    w,b = train(data,label,alpha)  
     print("Final W = {0} , b = {1}".format(w,b))
     
